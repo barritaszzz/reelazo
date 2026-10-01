@@ -1,0 +1,22 @@
+# Lista estricta: lo que nunca debe subirse
+.env*
+*.sqlite
+*.db
+*.csv
+*.py
+*.log
+*.md
+*.json
+!demos/n8n/*.json
+!assets/demos/*.json
+!manifest.webmanifest
+!site.webmanifest
+README*
+BRIEF*
+.DS_Store
+node_modules/
+capturas/
+.secretos/
+__pycache__/
+*.pem
+*.key

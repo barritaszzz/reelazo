@@ -1,0 +1,140 @@
+{
+  "name": "Resumen de solicitudes (demo)",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Demo generica - INACTIVO\nCada hora toma una lista de solicitudes de ejemplo, marca las urgentes y prepara un resumen. No envia nada y no usa credenciales ni scripts externos. Es solo una demo: se adapta a tu negocio.",
+        "height": 200,
+        "width": 460
+      },
+      "id": "nota",
+      "name": "Leeme",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "t1",
+      "name": "Cada hora",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        420,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "[{\"cliente\":\"Demo A\",\"urgente\":true},{\"cliente\":\"Demo B\",\"urgente\":false}]"
+      },
+      "id": "s1",
+      "name": "Solicitudes de ejemplo",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.urgente}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "i1",
+      "name": "Es urgente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        860,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "o1",
+      "name": "Urgente",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        120
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "o2",
+      "name": "Normal",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Cada hora": {
+      "main": [
+        [
+          {
+            "node": "Solicitudes de ejemplo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solicitudes de ejemplo": {
+      "main": [
+        [
+          {
+            "node": "Es urgente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Es urgente?": {
+      "main": [
+        [
+          {
+            "node": "Urgente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {}
+}
